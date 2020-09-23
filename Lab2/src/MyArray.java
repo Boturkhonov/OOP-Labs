@@ -1,0 +1,77 @@
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class MyArray implements Cloneable, Serializable {
+    private ArrayList<Double> array = new ArrayList<>();
+    private final transient Scanner in = new Scanner(System.in);
+    private int size;
+    private final int DEFAULT_SIZE = 10;
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        if (size > 0) {
+            this.size = size;
+        } else {
+            System.err.println("Размер массива должен быть строго положителным!");
+        }
+    }
+
+    public MyArray() {
+        setSize(DEFAULT_SIZE);
+    }
+
+    public MyArray(int size) {
+        setSize(size);
+    }
+
+    public void fill() {
+        array.clear();
+        for (int i = 0; i < size; i++) {
+            array.add(in.nextDouble());
+        }
+    }
+
+    public void changeAllElements(final char operationSign, final double operand) {
+        switch (operationSign) {
+            case '+' -> {
+                for (int i = 0; i < array.size(); i++) {
+                    array.set(i, array.get(i) + operand);
+                }
+            }
+            case '-' -> {
+                for (int i = 0; i < array.size(); i++) {
+                    array.set(i, array.get(i) - operand);
+                }
+            }
+            case '*' -> {
+                for (int i = 0; i < array.size(); i++) {
+                    array.set(i, array.get(i) * operand);
+                }
+            }
+            case '/' -> {
+                for (int i = 0; i < array.size(); i++) {
+                    array.set(i, array.get(i) / operand);
+                }
+            }
+        }
+    }
+
+    public void print() {
+        for (Double elem: array) {
+            System.out.print(elem + " ");
+        }
+        System.out.println();
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        MyArray clone = (MyArray) super.clone();
+        clone.array = (ArrayList<Double>) array.clone();
+        return clone;
+    }
+}
