@@ -46,6 +46,10 @@ public class Main {
 //        System.out.println("Клонированный массив: ");
 //        MyArray cloned = (MyArray) myArray.clone();
 //        cloned.print();
+        //---------------------------- Копирование -------------------------------------
+        System.out.println("Копированный массив: ");
+        MyArray copied = new MyArray(myArray);
+        copied.print();
     }
 
     static void taskC() {

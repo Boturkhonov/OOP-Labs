@@ -29,6 +29,13 @@ public class MyArray implements Cloneable, Serializable {
         setSize(size);
     }
 
+    public MyArray (MyArray myArray) {
+        this.size = myArray.size;
+        for (int i = 0; i < size; i++) {
+            this.array.add(myArray.array.get(i));
+        }
+    }
+
     public void fill() {
         array.clear();
         for (int i = 0; i < size; i++) {
