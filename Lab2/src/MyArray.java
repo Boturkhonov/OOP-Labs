@@ -9,6 +9,10 @@ public class MyArray implements Cloneable, Serializable {
     private int size;
     private final int DEFAULT_SIZE = 10;
 
+    public ArrayList<Double> getArray() {
+        return array;
+    }
+
     public int getSize() {
         return size;
     }
@@ -33,6 +37,13 @@ public class MyArray implements Cloneable, Serializable {
         array.clear();
         for (int i = 0; i < size; i++) {
             array.add(in.nextDouble());
+        }
+    }
+
+    public void fill(double[] array) {
+        this.array.clear();
+        for (double j : array) {
+            this.array.add(j);
         }
     }
 
