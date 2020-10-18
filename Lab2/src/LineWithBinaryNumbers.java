@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import java.util.Scanner;
 
 public class LineWithBinaryNumbers implements Cloneable, Serializable {
 

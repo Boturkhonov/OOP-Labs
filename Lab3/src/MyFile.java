@@ -7,12 +7,16 @@ public class MyFile {
     private static FileInputStream fis = null;
     private static FileWriter writer = null;
 
-    public static void setInputFilePath(String path) {
+    public static boolean setInputFilePath(String path) {
+        boolean flag = false;
         try {
             fis = new FileInputStream(path);
+            flag = true;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.err.print("Ошибка! Файл не найден");
+            System.out.println();
         }
+        return flag;
     }
 
     public static void setOutputFilePath(String path) {
@@ -78,19 +82,19 @@ public class MyFile {
     }
 
     public static String readString () {
-        String line = "";
+        StringBuilder line = new StringBuilder();
         try {
             // читаем посимвольно
             int c;
             while((c = fis.read())!=-1){
-                line += String.valueOf((char)c);
+                line.append((char) c);
             }
         }
         catch(IOException ex){
 
             System.out.println(ex.getMessage());
         }
-        return line;
+        return line.toString();
     }
 
 }

@@ -13,10 +13,6 @@ public class MyArray implements Cloneable, Serializable {
         return array;
     }
 
-    public int getSize() {
-        return size;
-    }
-
     public void setSize(int size) {
         if (size > 0) {
             this.size = size;

@@ -18,8 +18,6 @@ public class BinFileMaker {
             System.out.println(ex.getMessage());
         }
         String[] splatText = text.split("\\r\\n| ");
-        //System.out.println(Arrays.toString(splatText));
-
         values = new double[splatText.length];
         for (int i = 0; i < values.length; i++) {
             values[i] = Double.parseDouble(splatText[i]);

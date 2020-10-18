@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
@@ -14,7 +15,14 @@ public class Menu {
             System.out.println();
             System.out.println("\t [0] Выход\n");
             System.out.print(" -> ");
-            option = scanner.nextInt();
+            try {
+                option = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+                System.out.println("Неправильный ввод!");
+                option = -1;
+                continue;
+            }
             if (option == 0) continue;
             System.out.println("Выберите способ ввода & вывода.");
             System.out.print("Введите 'c' для ввода & вывода через консоль или 'f' через файл: ");
@@ -22,9 +30,10 @@ public class Menu {
             char inputOption = scanner.nextLine().charAt(0);
             if (inputOption == 'f') {
                 if (option != 1) {
-                    System.out.println("Введите полный путь к файлу для чтения: ");
-                    input = scanner.nextLine();
-                    MyFile.setInputFilePath(input);
+                    do {
+                        System.out.println("Введите полный путь к файлу для чтения: ");
+                        input = scanner.nextLine();
+                    } while (!MyFile.setInputFilePath(input));
                 }
                 if (option != 3) {
                     System.out.println("Введите полный путь к файлу для записи результатов: ");
@@ -32,23 +41,21 @@ public class Menu {
                     MyFile.setOutputFilePath(output);
                 }
             }
+
             switch (option) {
-                case 1:
+                case 1 -> {
                     System.out.println("Задание A: ");
                     taskA(inputOption);
-                break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.println("Задание B: ");
                     taskB(inputOption);
-                break;
-                case 3:
+                }
+                case 3 -> {
                     System.out.println("Задание C: ");
                     taskC(inputOption);
-                break;
-//                case 0:
-//                    continue;
-                default:
-                    System.out.println("Пункт №" + option + " не найден");
+                }
+                default -> System.out.println("Пункт №" + option + " не найден");
             }
             System.out.println("Нажмите Enter для продолжения...");
             scanner.nextLine();
