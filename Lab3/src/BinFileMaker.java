@@ -19,8 +19,12 @@ public class BinFileMaker {
         }
         String[] splatText = text.split("\\r\\n| ");
         values = new double[splatText.length];
-        for (int i = 0; i < values.length; i++) {
-            values[i] = Double.parseDouble(splatText[i]);
+        try {
+            for (int i = 0; i < values.length; i++) {
+                values[i] = Double.parseDouble(splatText[i]);
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("Ошибка! Файл содержит недопустимые символы");
         }
         try(DataOutputStream dos = new DataOutputStream(new FileOutputStream(path + ".bin")))
         {
@@ -29,7 +33,6 @@ public class BinFileMaker {
             }
         }
         catch(IOException ex){
-
             System.out.println(ex.getMessage());
         }
     }

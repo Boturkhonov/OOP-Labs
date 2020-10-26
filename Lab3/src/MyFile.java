@@ -23,13 +23,14 @@ public class MyFile {
         try {
             writer = new FileWriter(path);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Ошибка! Невозможно создать файл");
+            System.out.println();
         }
     }
 
     public static void writeLine (String line) {
         try {
-            writer.write(line+"\n");
+            writer.write(line + System.lineSeparator());
         } catch (IOException e) {
             e.printStackTrace();
         }

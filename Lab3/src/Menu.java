@@ -24,35 +24,21 @@ public class Menu {
                 continue;
             }
             if (option == 0) continue;
-            System.out.println("Выберите способ ввода & вывода.");
-            System.out.print("Введите 'c' для ввода & вывода через консоль или 'f' через файл: ");
-            scanner.nextLine();
-            char inputOption = scanner.nextLine().charAt(0);
-            if (inputOption == 'f') {
-                if (option != 1) {
-                    do {
-                        System.out.println("Введите полный путь к файлу для чтения: ");
-                        input = scanner.nextLine();
-                    } while (!MyFile.setInputFilePath(input));
-                }
-                if (option != 3) {
-                    System.out.println("Введите полный путь к файлу для записи результатов: ");
-                    output = scanner.nextLine();
-                    MyFile.setOutputFilePath(output);
-                }
-            }
 
             switch (option) {
                 case 1 -> {
                     System.out.println("Задание A: ");
+                    var inputOption = chooseInputOption(option);
                     taskA(inputOption);
                 }
                 case 2 -> {
                     System.out.println("Задание B: ");
+                    var inputOption = chooseInputOption(option);
                     taskB(inputOption);
                 }
                 case 3 -> {
                     System.out.println("Задание C: ");
+                    var inputOption = chooseInputOption(option);
                     taskC(inputOption);
                 }
                 default -> System.out.println("Пункт №" + option + " не найден");
@@ -129,5 +115,26 @@ public class Menu {
         } else {
             System.out.println("Ряд не упорядочен");
         }
+    }
+
+    public static char chooseInputOption(int taskNumber) {
+        System.out.println("Выберите способ ввода & вывода.");
+        System.out.print("Введите 'c' для ввода & вывода через консоль или 'f' через файл: ");
+        scanner.nextLine();
+        char inputOption = scanner.nextLine().charAt(0);
+        if (inputOption == 'f') {
+            if (taskNumber != 1) {
+                do {
+                    System.out.println("Введите полный путь к файлу для чтения (или '!' - вернутся назад): ");
+                    input = scanner.nextLine();
+                } while (!MyFile.setInputFilePath(input));
+            }
+            if (taskNumber != 3) {
+                System.out.println("Введите полный путь к файлу для записи результатов (или '!' - вернутся назад): ");
+                output = scanner.nextLine();
+                MyFile.setOutputFilePath(output);
+            }
+        }
+        return inputOption;
     }
 }
