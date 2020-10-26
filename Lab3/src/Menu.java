@@ -82,7 +82,7 @@ public class Menu {
         System.out.print("Введите знак операции: ");
         String operationSign = scanner.next();
         System.out.print("Введите операнд: ");
-        double operand = scanner.nextInt();
+        double operand = scanner.nextDouble();
         myArray.changeAllElements(operationSign.charAt(0), operand);
         //----------------------------Вывод массива-------------------------------------
         if (inputOption == 'f') {
@@ -125,12 +125,12 @@ public class Menu {
         if (inputOption == 'f') {
             if (taskNumber != 1) {
                 do {
-                    System.out.println("Введите полный путь к файлу для чтения (или '!' - вернутся назад): ");
+                    System.out.println("Введите полный путь к файлу для чтения: ");
                     input = scanner.nextLine();
                 } while (!MyFile.setInputFilePath(input));
             }
             if (taskNumber != 3) {
-                System.out.println("Введите полный путь к файлу для записи результатов (или '!' - вернутся назад): ");
+                System.out.println("Введите полный путь к файлу для записи результатов: ");
                 output = scanner.nextLine();
                 MyFile.setOutputFilePath(output);
             }
