@@ -1,5 +1,3 @@
-import java.util.Calendar;
-
 public class MilkProduct extends Product {
 
     private Double fatPercentage;
@@ -8,8 +6,12 @@ public class MilkProduct extends Product {
         this.fatPercentage = fatPercentage;
     }
 
-    public MilkProduct(String name, Calendar productionDate, Double price) {
-        super(name, productionDate, price);
+    public Double getFatPercentage() {
+        return fatPercentage;
+    }
+
+    public MilkProduct(String name, Double price) {
+        super(name, price);
     }
 
     public void showDescription() {

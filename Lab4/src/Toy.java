@@ -1,5 +1,3 @@
-import java.util.Calendar;
-
 public class Toy extends Good {
     private String material;
 
@@ -7,8 +5,12 @@ public class Toy extends Good {
         this.material = material;
     }
 
-    public Toy(String name, Calendar productionDate, Double price) {
-        super(name, productionDate, price);
+    public String getMaterial() {
+        return material;
+    }
+
+    public Toy(String name, Double price) {
+        super(name, price);
     }
 
     public void showDescription() {

@@ -8,7 +8,7 @@ public class Product extends Good {
     private String composition;
     private Double weigh;
     private Calendar expirationDate = null;
-    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MM yyyy");
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
     public void setComposition(String composition) {
         this.composition = composition;
@@ -16,6 +16,14 @@ public class Product extends Good {
 
     public void setWeigh(Double weigh) {
         this.weigh = weigh;
+    }
+
+    public String getComposition() {
+        return composition;
+    }
+
+    public Double getWeigh() {
+        return weigh;
     }
 
     public boolean setExpirationDate(String expirationDate) {
@@ -34,12 +42,13 @@ public class Product extends Good {
         return flag;
     }
 
-    public Calendar getExpirationDate() {
-        return this.expirationDate;
+    public String getExpirationDate() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        return simpleDateFormat.format(this.expirationDate.getTime());
     }
 
-    public Product(String name, Calendar productionDate, Double price) {
-        super(name, productionDate, price);
+    public Product(String name, Double price) {
+        super(name, price);
     }
 
     public void showDescription() {
