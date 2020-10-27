@@ -1,2 +1,7 @@
-package PACKAGE_NAME;public class Menu {
+public class Menu {
+
+
+    public static void showMenu() {
+
+    }
 }

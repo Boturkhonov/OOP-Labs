@@ -6,7 +6,7 @@ public class MyFile {
 
     private static FileInputStream fis = null;
     private static FileWriter writer = null;
-
+    private static String outputPath;
     public static boolean setInputFilePath(String path) {
         boolean flag = false;
         try {
@@ -22,6 +22,7 @@ public class MyFile {
     public static void setOutputFilePath(String path) {
         try {
             writer = new FileWriter(path);
+            outputPath = path;
         } catch (IOException e) {
             System.err.println("Ошибка! Невозможно создать файл");
             System.out.println();
@@ -37,32 +38,24 @@ public class MyFile {
     }
 
     public static void writeArray(int [] array) {
-        try {
-            writer.write(Arrays.toString(array));
+        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(outputPath))) {
+            for (int elem : array) {
+                dos.writeInt(elem);
+            }
             System.out.println("Результат успешно записан");
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     public static void writeArray(ArrayList<Double> arrayList) {
-        try {
-            writer.write(Arrays.toString(arrayList.toArray()));
+        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(outputPath))) {
+            for (Double elem : arrayList) {
+                dos.writeDouble(elem);
+            }
             System.out.println("Результат успешно записан");
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
