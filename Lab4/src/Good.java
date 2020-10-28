@@ -17,11 +17,20 @@ public abstract class Good {
         this.name = name;
     }
 
-    public void setProductionDate(String productionDate) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        Date date = sdf.parse(productionDate);
-        this.productionDate = new GregorianCalendar();
-        this.productionDate.setTime(date);
+    public boolean setProductionDate(String productionDate) {
+        boolean flag = false;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+            Date date = null;
+            date = sdf.parse(productionDate);
+            this.productionDate = new GregorianCalendar();
+            this.productionDate.setTime(date);
+            flag = true;
+        } catch (ParseException e) {
+            System.err.println("Ошибка! Неверный формат");
+            System.out.println();
+        }
+        return flag;
     }
 
     public String getProductionDate() {

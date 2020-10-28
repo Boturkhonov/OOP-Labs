@@ -21,6 +21,14 @@ public class Supermarket {
         toys.add(toy);
     }
 
+    public void deleteMilkProduction(int index) {
+        milkProducts.remove(index);
+    }
+
+    public void deleteToy(int index) {
+        toys.remove(index);
+    }
+
     public ArrayList<MilkProduct> getMilkProducts() {
         return milkProducts;
     }
