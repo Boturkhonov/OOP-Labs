@@ -1,5 +1,5 @@
 import java.io.*;
-import java.text.ParseException;
+import java.util.ArrayList;
 
 public class MyData {
     static FileInputStream fis = null;
@@ -35,6 +35,7 @@ public class MyData {
 
             String name = dis.readUTF();
             supermarket = new Supermarket(name);
+
 
             int numberOfMilkProducts = dis.readInt();
 
@@ -74,10 +75,27 @@ public class MyData {
 
                 supermarket.addToy(toy);
             }
+            System.out.println("Файл успешно открыт");
+            System.out.println("Название супермаркета: " + supermarket.getName());
+            System.out.println("Список товар:");
+            ArrayList<MilkProduct> milkProducts = supermarket.getMilkProducts();
+            if (milkProducts.size() > 0) {
+                System.out.println("Молочные продукты: ");
+                for (int i = 0; i < milkProducts.size(); i++) {
+                    System.out.println((i+1) + "." + " " + milkProducts.get(i).getName());
+                }
+            }
+            ArrayList<Toy> toys = supermarket.getToys();
+            if (toys.size() > 0) {
+                System.out.println("Игрушки: ");
+                for (int i = 0; i < toys.size(); i++) {
+                    System.out.println((i+1) + "." + " " + toys.get(i).getName());
+                }
+            }
 
-
-        } catch (IOException | ParseException e) {
-            System.err.println("Ошибка! Файл поврежден");;
+        } catch (IOException e) {
+            System.err.println("Ошибка! Файл поврежден");
+            System.exit(123);
         }
 
         return supermarket;
@@ -88,6 +106,8 @@ public class MyData {
         try (DataOutputStream dos = new DataOutputStream(fos)) {
 
             dos.writeUTF(supermarket.getName());
+
+            dos.writeInt(supermarket.getMilkProducts().size());
 
             for (int j = 0; j < supermarket.getMilkProducts().size(); j++) {
 
@@ -103,6 +123,8 @@ public class MyData {
                 dos.writeDouble(milkProduct.getFatPercentage());
 
             }
+
+            dos.writeInt(supermarket.getToys().size());
 
             for (int j = 0; j < supermarket.getToys().size(); j++) {
 

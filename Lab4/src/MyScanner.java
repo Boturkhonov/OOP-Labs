@@ -15,6 +15,7 @@ public class MyScanner {
                 System.err.println("Ошибка ввода");
                 System.out.println();
                 System.out.println("Введите заново");
+                getString();
             }
         } while (!isCorrect);
 
@@ -32,6 +33,7 @@ public class MyScanner {
                 System.err.println("Ошибка ввода");
                 System.out.println();
                 System.out.println("Введите заново");
+                getString();
             }
         } while (!isCorrect);
 
@@ -39,6 +41,7 @@ public class MyScanner {
     }
 
     public static String getString() {
-        return scanner.nextLine();
+        String result = scanner.nextLine();
+        return result;
     }
 }

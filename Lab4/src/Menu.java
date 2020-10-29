@@ -2,6 +2,9 @@ import java.util.ArrayList;
 
 public class Menu {
     private static Supermarket supermarket;
+    private static boolean isOpened = false;
+    private static boolean isChanged = false;
+    private static String path;
 
     public static void showMenu() {
         int option = 1;
@@ -20,7 +23,9 @@ public class Menu {
                 }
 
             }
+            if (isChanged) saveChanges();
         }
+        if (isChanged) saveChanges();
     }
 
     private static int mainMenu() {
@@ -40,6 +45,7 @@ public class Menu {
 
     private static int getOption(int maxOption) {
         int option;
+        showHint();
         option = MyScanner.getInt();
 
         while (option < 0 || option > maxOption) {
@@ -53,6 +59,7 @@ public class Menu {
 
     private static void createNewSupermarket() {
         System.out.print("Введите название супермаркета: ");
+        MyScanner.getString();
         String name = MyScanner.getString();
         supermarket = new Supermarket(name);
         System.out.println("База данных успешно создана");
@@ -62,18 +69,18 @@ public class Menu {
     private static void pause() {
         System.out.println("Нажмите Enter для продолжения...");
         MyScanner.getString();
-        MyScanner.getString();
     }
 
     private static void openFile() {
-        System.out.println("Введите полный путь к файлу: ");
-        String path = MyScanner.getString();
+        System.out.print("Введите полный путь к файлу: ");
+        MyScanner.getString();
+        path = MyScanner.getString();
         while (!MyData.setInputPath(path)) {
             System.out.println("Введите заново: ");
             path = MyScanner.getString();
         }
         supermarket = MyData.getSupermarket();
-        System.out.println("Файл успешно открыт");
+        isOpened = true;
         pause();
     }
 
@@ -147,6 +154,7 @@ public class Menu {
                 case 1 -> showMilkProducts(true);
                 case 2 -> showToys(true);
             }
+
         }
     }
 
@@ -163,7 +171,7 @@ public class Menu {
                 else
                     System.out.println(" Выберите номер товара для подробной информации: ");
                 for (int i = 0; i < milkProducts.size(); i++) {
-                    System.out.println("[" + (i + 1) +"]" + " " + milkProducts.get(i).getName());
+                    System.out.println("\t [" + (i + 1) +"]" + " " + milkProducts.get(i).getName());
                 }
             }
             System.out.println();
@@ -173,8 +181,10 @@ public class Menu {
                 if (delete) {
                     supermarket.deleteMilkProduction(option-1);
                     System.out.println("Товар удалён");
+                    isChanged = true;
                 } else
                     milkProducts.get(option - 1).showDescription();
+                MyScanner.getString();
                 pause();
             }
         }
@@ -193,7 +203,7 @@ public class Menu {
                 else
                     System.out.println(" Выберите номер товара для подробной информации: ");
                 for (int i = 0; i < toys.size(); i++) {
-                    System.out.println("[" + (i + 1) +"]" + " " + toys.get(i).getName());
+                    System.out.println("\t [" + (i + 1) +"]" + " " + toys.get(i).getName());
                 }
             }
             System.out.println();
@@ -203,8 +213,10 @@ public class Menu {
                 if (delete) {
                     supermarket.deleteToy(option-1);
                     System.out.println("Товар удалён");
+                    isChanged = true;
                 } else
                     toys.get(option - 1).showDescription();
+                MyScanner.getString();
                 pause();
             }
         }
@@ -213,6 +225,7 @@ public class Menu {
     private static void addMilkProduct() {
 
         System.out.print("Введите наименование товара: ");
+        MyScanner.getString();
         String name = MyScanner.getString();
         System.out.print("Введите цену: ");
         Double price = MyScanner.getDouble();
@@ -222,26 +235,91 @@ public class Menu {
         System.out.print("Введите вес: ");
         Double weigh = MyScanner.getDouble();
         milkProduct.setWeigh(weigh);
+
         System.out.print("Введите состав: ");
+        MyScanner.getString();
         String composition = MyScanner.getString();
+        milkProduct.setComposition(composition);
+
         System.out.print("Введите дату производства (дд.мм.гггг): ");
         String productionDate = MyScanner.getString();
         while (!milkProduct.setProductionDate(productionDate)) {
             System.out.println("Введите дату заново (дд.мм.гггг)");
             productionDate = MyScanner.getString();
         }
+
         System.out.print("Введите срок годности (дд.мм.гггг): ");
         String expirationDate = MyScanner.getString();
         while (!milkProduct.setExpirationDate(expirationDate)) {
             System.out.println("Введите дату заново (дд.мм.гггг)");
             expirationDate = MyScanner.getString();
         }
+
         System.out.print("Введите процент жира: ");
         Double fatPercentage = MyScanner.getDouble();
+        milkProduct.setFatPercentage(fatPercentage);
+
+        supermarket.addMilkProduct(milkProduct);
+        isChanged = true;
     }
 
     private static void addToy() {
-        
+        System.out.print("Введите наименование товара: ");
+        MyScanner.getString();
+        String name = MyScanner.getString();
+        System.out.print("Введите цену: ");
+        Double price = MyScanner.getDouble();
+
+        Toy toy = new Toy(name, price);
+
+        System.out.print("Введите материал: ");
+        MyScanner.getString();
+        String material = MyScanner.getString();
+        toy.setMaterial(material);
+
+        System.out.print("Введите дату производства (дд.мм.гггг): ");
+        String productionDate = MyScanner.getString();
+        while (!toy.setProductionDate(productionDate)) {
+            System.out.println("Введите дату заново (дд.мм.гггг)");
+            productionDate = MyScanner.getString();
+        }
+        supermarket.addToy(toy);
+        isChanged = true;
+    }
+
+    private static void saveChanges() {
+
+        System.out.println("Сохранить изменения?");
+
+        System.out.println("\t [1] Да");
+        System.out.println("\t [0] Нет");
+        int option = getOption(1);
+
+        if (option == 1) {
+            if (isOpened) {
+                MyData.setOutputPath(path);
+            } else {
+                System.out.print("Введите полный путь: ");
+                MyScanner.getString();
+                String path = MyScanner.getString();
+                while (!MyData.setOutputPath(path)) {
+                    System.out.println("Введите заново: ");
+                    path = MyScanner.getString();
+                }
+            }
+            MyData.saveSupermarket(supermarket);
+            System.out.println("Изменения успешно сохранены");
+            isChanged = false;
+            pause();
+
+        } else {
+            isChanged = false;
+        }
+    }
+
+    private static void showHint () {
+        System.out.println();
+        System.out.print(" -> ");
     }
 
 }
