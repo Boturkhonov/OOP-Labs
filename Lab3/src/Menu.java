@@ -15,14 +15,9 @@ public class Menu {
             System.out.println();
             System.out.println("\t [0] Выход\n");
             System.out.print(" -> ");
-            try {
-                option = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                scanner.nextLine();
-                System.out.println("Неправильный ввод!");
-                option = -1;
-                continue;
-            }
+            
+            option = MyScanner.getInt();
+            
             if (option == 0) continue;
 
             switch (option) {
@@ -51,12 +46,11 @@ public class Menu {
     }
     private static void taskA(char inputOption) {
         System.out.println("Введите n: ");
-        int n = scanner.nextInt();
+        int n = MyScanner.getInt();
         FibonacciNumbers fibonacciNumbers = new FibonacciNumbers();
         fibonacciNumbers.setSize(n);
 
         if (inputOption == 'f') {
-            MyFile.writeLine("Первые " + n + " числа Фибоначчи: ");
             MyFile.writeArray(fibonacciNumbers.getFibonacciNumbers());
         } else {
             System.out.println("Первые " + n + " числа Фибоначчи: ");
@@ -72,7 +66,7 @@ public class Menu {
             myArray.fill(MyFile.readArray());
         } else {
             System.out.print("Введите размер массива: ");
-            size = scanner.nextInt();
+            size = MyScanner.getInt();
             myArray.setSize(size);
             System.out.println("Введите массив: ");
             myArray.fill();
@@ -82,7 +76,7 @@ public class Menu {
         System.out.print("Введите знак операции: ");
         String operationSign = scanner.next();
         System.out.print("Введите операнд: ");
-        double operand = scanner.nextDouble();
+        double operand = MyScanner.getDouble();
         myArray.changeAllElements(operationSign.charAt(0), operand);
         //----------------------------Вывод массива-------------------------------------
         if (inputOption == 'f') {
@@ -120,7 +114,6 @@ public class Menu {
     public static char chooseInputOption(int taskNumber) {
         System.out.println("Выберите способ ввода & вывода.");
         System.out.print("Введите 'c' для ввода & вывода через консоль или 'f' через файл: ");
-        scanner.nextLine();
         char inputOption = scanner.nextLine().charAt(0);
         if (inputOption == 'f') {
             if (taskNumber != 1) {

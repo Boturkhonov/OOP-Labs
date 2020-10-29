@@ -72,6 +72,10 @@ public class MyArray implements Cloneable, Serializable {
                     array.set(i, array.get(i) / operand);
                 }
             }
+            default -> {
+                System.err.println("Неверный знак операции");
+                System.out.println();
+            }
         }
     }
 
