@@ -51,6 +51,7 @@ public class Menu {
         while (option < 0 || option > maxOption) {
             System.out.println("Пункт №" + option + " не найден");
             System.out.println("Выберите пунк заново");
+            showHint();
             option = MyScanner.getInt();
         }
 
